@@ -41,7 +41,7 @@ public class AmazonProduct {
 
     }
 
-    @Test (priority = 0)
+    @Test (priority = 1)
     void addToBoxAndDeleteFromCart() throws InterruptedException {
 
         AmazonProductPage amazonProductPage = new AmazonProductPage();
@@ -89,7 +89,7 @@ public class AmazonProduct {
 
     }
 
-    @Test (priority = 0)
+    @Test (priority = 2)
     void theBestSellerPage () throws InterruptedException {
 
         AmazonProductPage amazonProductPage = new AmazonProductPage();
