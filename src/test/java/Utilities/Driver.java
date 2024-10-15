@@ -6,44 +6,39 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
 
 public class Driver {
-    
-    static WebDriver driver;
-    
-    public static WebDriver getDriver(){
 
-        if (driver == null) {
-            driver = new ChromeDriver();
-            driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
-        }
+private static ThreadLocal<WebDriver> driverPool = new ThreadLocal<>();
 
-        return driver;
+public static WebDriver getDriver() {
+
+    if (driverPool.get() == null) {
+
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
+
+        driverPool.set(driver);
     }
-    
-    public static void closeDriver(){
-        
-        if (driver != null){
-            
-            driver.close();
-            driver=null;
-        }
-        
-    }
-    
-    public static void quitDriver (){
-
-
-        if (driver != null){
-
-            driver.quit();
-            driver=null;
-        }
-        
-        
-    }
-    
-    
-
-
+    return driverPool.get();
 }
+
+
+public static void closeDriver() {
+    if (driverPool.get() != null) {
+        driverPool.get().close();
+        driverPool=null;
+    }
+}
+
+
+public static void quitDriver() {
+    if (driverPool.get() != null) {
+        driverPool.get().quit();
+        driverPool=null;
+    }
+}
+}
+
+

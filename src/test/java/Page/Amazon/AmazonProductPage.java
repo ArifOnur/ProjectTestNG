@@ -1,4 +1,4 @@
-package Page;
+package Page.Amazon;
 
 
 import Utilities.Driver;
@@ -49,6 +49,20 @@ public class AmazonProductPage {
 
     @FindBy (xpath = "//h2[contains (text(), \'Amazon sepetiniz boş.\')]")
     public WebElement deleteMessage;
+
+    @FindBy (xpath="//a[@data-csa-c-content-id=\'nav_cs_bestsellers\']")
+    public WebElement bestSeller;
+
+    @FindBy (xpath="//span[@id='zg_banner_text']")
+    public WebElement bestSellerPage;
+
+    @FindBy (xpath = "//span[contains(text(), 'Başa dön')]")
+    public WebElement backToTop;
+
+
+
+
+
 
 
 

@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="allTest" parallel="methods" thread-count="3">
+
+    <test name="parallelAmazonTest">
+
+
+        <classes>
+
+            <class name="TestCases.Amazon.AmazonProduct">
+
+            </class>
+
+        </classes>
+
+    </test>
+
+</suite>

@@ -1,11 +1,15 @@
-package TestsCases.Amazon;
+package TestCases.Amazon;
 
-import Page.AmazonProductPage;
+import Page.Amazon.AmazonProductPage;
 import Utilities.Driver;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import org.testng.annotations.Test;
 
 
@@ -13,7 +17,9 @@ import java.time.Duration;
 
 public class AmazonProduct {
 
-    @Test void amazonSearchProduct() throws InterruptedException {
+
+    @Test (priority = 0)
+    void amazonSearchProduct() throws InterruptedException {
 
         AmazonProductPage amazonProductPage = new AmazonProductPage();
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5L));
@@ -35,10 +41,12 @@ public class AmazonProduct {
 
     }
 
-    @Test void addToBoxAndDeleteFromCart() throws InterruptedException {
+    @Test (priority = 0)
+    void addToBoxAndDeleteFromCart() throws InterruptedException {
 
         AmazonProductPage amazonProductPage = new AmazonProductPage();
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5L));
+
         Driver.getDriver().get("https://www.amazon.com.tr/");
 
         amazonProductPage.cookies.click();
@@ -80,4 +88,41 @@ public class AmazonProduct {
         Driver.quitDriver();
 
     }
+
+    @Test (priority = 0)
+    void theBestSellerPage () throws InterruptedException {
+
+        AmazonProductPage amazonProductPage = new AmazonProductPage();
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5L));
+        Driver.getDriver().get("https://www.amazon.com.tr/");
+
+        amazonProductPage.cookies.click();
+
+        System.out.println("Homepage : " + Driver.getDriver().getTitle());
+        if (Driver.getDriver().getTitle().contains("Amazon")){
+            System.out.println("Home page is visible ");
+        }else {
+            System.out.println("Actual : " + Driver.getDriver().getTitle());
+        }
+
+        wait.until(ExpectedConditions.visibilityOf(amazonProductPage.bestSeller));
+        amazonProductPage.bestSeller.click();
+        Thread.sleep(1500);
+
+        String expectedPage = "Çok Satanlar";
+        String actualPage = amazonProductPage.bestSellerPage.getText();
+        Assert.assertTrue(actualPage.contains(expectedPage));
+
+        js.executeScript("arguments[0].scrollIntoView();", amazonProductPage.backToTop);
+        Thread.sleep(1500);
+
+        amazonProductPage.backToTop.click();
+
+        Driver.quitDriver();
+
+    }
+
+
+
 }
